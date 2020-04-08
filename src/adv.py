@@ -39,6 +39,18 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+human = Player(room['outside'])
+##BEGIN SETUP
+human.name = input("Please enter your name: ")
+print(human.location.name)
+print(human.name)
+print(f"Welcome to the Adventure Game {human.name}!")
+##DEFINE COMMANDS
+n = human.location.n_to
+s = human.location.s_to
+e = human.location.e_to
+w = human.location.w_to
+q = False
 
 # Write a loop that:
 #
@@ -50,3 +62,19 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+while True:
+    print(f"{human.name} you are in the {human.location.name}.")
+    print(f"{human.location.description}")
+    print("Your choices are: [n] North  [s] South  [w] West [e] East  [q] Quit")
+    choice = input("Please make a selection to continue: ")
+    if choice == "n":
+        if human.location.n_to is not None:
+            human.location = human.location.n_to
+        else:
+            print(f"BUMP! Please choose another direction!")
+    if choice == "s":
+        if human.location.s_to is not None:
+            human.location = human.location.s_to
+        else:
+            print(f"BUMP! Please choose another direction!")
+
