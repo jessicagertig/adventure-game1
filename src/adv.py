@@ -41,16 +41,15 @@ room['treasure'].s_to = room['narrow']
 # Make a new player object that is currently in the 'outside' room.
 human = Player(room['outside'])
 ##BEGIN SETUP
-human.name = input("Please enter your name: ")
-print(human.location.name)
-print(human.name)
-print(f"Welcome to the Adventure Game {human.name}!")
+human.name = input("Please enter your name: \n")
+player = human.name.upper()
+place = human.location.name.upper()
+print("#############################################")
+print(f"#### Welcome to the Adventure Game {player}! ####")
+print("#############################################\n")
 ##DEFINE COMMANDS
-n = human.location.n_to
-s = human.location.s_to
-e = human.location.e_to
-w = human.location.w_to
-q = False
+
+game_running = True
 
 # Write a loop that:
 #
@@ -62,19 +61,46 @@ q = False
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
-while True:
-    print(f"{human.name} you are in the {human.location.name}.")
-    print(f"{human.location.description}")
-    print("Your choices are: [n] North  [s] South  [w] West [e] East  [q] Quit")
+while game_running == True:
+    print(f"{player} you are in the {place}.\n")
+    print(f"{human.location.description}...\n")
+    print("Your choices are: [n] North  [s] South  [w] West [e] East  [q] Quit\n")
     choice = input("Please make a selection to continue: ")
     if choice == "n":
         if human.location.n_to is not None:
             human.location = human.location.n_to
         else:
-            print(f"BUMP! Please choose another direction!")
-    if choice == "s":
+            print("######")
+            print("BUMP! Please choose another direction!")
+            print("######")
+    elif choice == "s":
         if human.location.s_to is not None:
             human.location = human.location.s_to
         else:
-            print(f"BUMP! Please choose another direction!")
+            print("######")
+            print("BUMP! Please choose another direction!")
+            print("######")
+    elif choice == "e":
+        if human.location.e_to is not None:
+            human.location = human.location.e_to
+        else:
+            print("######")
+            print("BUMP! Please choose another direction!")
+            print("######")
+    elif choice == "w":
+        if human.location.w_to is not None:
+            human.location = human.location.w_to
+        else:
+            print("######")
+            print("BUMP! Please choose another direction!")
+            print("######")
+    elif choice == "q":
+        print("GOODBYE!!!")
+        game_running = False
+        break
+    else:
+        print("######") 
+        print("Please choose a valid command.")
+        print("######")
+
 
