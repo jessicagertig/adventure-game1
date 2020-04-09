@@ -43,9 +43,9 @@ human = Player(room['outside'])
 ##BEGIN SETUP
 human.name = input("Please enter your name: \n")
 player = human.name.upper()
-place = human.location.name.upper()
+
 print("#############################################")
-print(f"#### Welcome to the Adventure Game {player}! ####")
+print(f"## Welcome to the Adventure Game {player}! ##")
 print("#############################################\n")
 ##DEFINE COMMANDS
 
@@ -62,45 +62,47 @@ game_running = True
 #
 # If the user enters "q", quit the game.
 while game_running == True:
+    place = human.location.name.upper()
     print(f"{player} you are in the {place}.\n")
     print(f"{human.location.description}...\n")
     print("Your choices are: [n] North  [s] South  [w] West [e] East  [q] Quit\n")
     choice = input("Please make a selection to continue: ")
+    print("  ")
     if choice == "n":
         if human.location.n_to is not None:
             human.location = human.location.n_to
         else:
-            print("######")
+            print("######################################")
             print("BUMP! Please choose another direction!")
-            print("######")
+            print("######################################\n")
     elif choice == "s":
         if human.location.s_to is not None:
             human.location = human.location.s_to
         else:
-            print("######")
+            print("######################################")
             print("BUMP! Please choose another direction!")
-            print("######")
+            print("######################################\n")
     elif choice == "e":
         if human.location.e_to is not None:
             human.location = human.location.e_to
         else:
-            print("######")
+            print("######################################")
             print("BUMP! Please choose another direction!")
-            print("######")
+            print("######################################\n")
     elif choice == "w":
         if human.location.w_to is not None:
             human.location = human.location.w_to
         else:
-            print("######")
+            print("######################################")
             print("BUMP! Please choose another direction!")
-            print("######")
+            print("######################################\n")
     elif choice == "q":
-        print("GOODBYE!!!")
+        print("GOODBYE!!!\n")
         game_running = False
         break
     else:
-        print("######") 
-        print("Please choose a valid command.")
-        print("######")
+        print("###################################") 
+        print("PLEASE CHOOSE A VALID COMMAND BELOW.")
+        print("###################################\n")
 
 
