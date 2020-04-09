@@ -120,29 +120,36 @@ while game_running == True:
             print("######################################\n")
     elif choice == "l":
         if len(human.location.items) == 0:
-            print("The room is empty.\n")
+            print("THE ROOM IS EMPTY!\n")
         elif len(human.location.items) > 0:
-            print('In the room you find:')
+            print('In the room you find: \n')
             for i in human.location.items:
                 print(f"Name: '{i.item_name}': {i.item_description}.\n")
             print(f"You may pick up an item (command [p]) and add it to your inventory or continue (command [c]).\n")
-            option = input("Please select an option: ")
+            option = input("Please select a command: ")
             if option == "c":
                 pass
             elif option == "p":
                 added_item = thing[input("Please type the item's name: ")]
                 human.get_item(added_item)
-                for e in human.inventory:
-                    print(e.item_name)
             else:
                 print("Please select a valid command.\n")
     elif choice == "i":
         if len(human.inventory) == 0:
-            print("Your inventory is empty.\n")
-    elif choice == "d":
-        pass
-    elif choice == "p":
-        pass
+            print("YOUR INVENTORY IS EMPTY!\n")
+        elif len(human.inventory) > 0:
+            print('Your inventory contains:\n')
+            for i in human.inventory:
+                print(f"Name: '{i.item_name}': {i.item_description}.\n")
+            print(f"You may drop an item (command [d]) and leave it in the room or continue (command [c]).\n")
+            option = input("Please select a command: ")
+            if option == "c":
+                pass
+            elif option == "d":
+                dropped_item = thing[input("Please type the item's name: ")]
+                human.drop_item(dropped_item)
+            else:
+                print("Please select a valid command.\n")
     elif choice == "q":
         print("GOODBYE!!!\n")
         game_running = False
