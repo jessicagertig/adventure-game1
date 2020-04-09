@@ -36,24 +36,26 @@ room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
 # Declare all the items
-ruby = Item('Ruby', 'glittering deep red jewel')
-dagger = Item('Dagger', 'razor sharp two sided dagger')
-shovel = Item('Shovel', 'long handled rusty shovel')
-dress = Item('Dress', 'fitted scarlet velvet gown trimmed with golden braid')
-vest = Item('Vest', 'leather vest with lacings to put on over any clothing')
-pants = Item('Pants', 'leather leggings which are strangely flexible')
-shirt = Item('Shirt', 'dark gold silk button up shirt which seems impervious to flames')
-lantern = Item('Lantern', 'metal lantern with a seeminly endless supply of fuel')
-lighter = Item('Lighter', 'pure gold lighter with a rose pattern etched into the gold')
-food = Item('Protein Bar', 'slightly unpleasant tasting edible bar that seems to provide all necessary nutrients')
-
+thing = {
+'ruby': Item('Ruby', 'glittering deep red jewel'),
+'dagger': Item('Dagger', 'razor sharp two sided dagger'),
+'shovel': Item('Shovel', 'long handled rusty shovel'),
+'dress': Item('Dress', 'fitted scarlet velvet gown trimmed with golden braid'),
+'vest': Item('Vest', 'leather vest with lacings to put on over any clothing'),
+'pants': Item('Pants', 'leather leggings which are strangely flexible'),
+'shirt': Item('Shirt', 'dark gold silk button up shirt which seems impervious to flames'),
+'lantern': Item('Lantern', 'metal lantern with a seeminly endless supply of fuel'),
+'lighter': Item('Lighter', 'pure gold lighter with a rose pattern etched into the gold'),
+'food': Item('Protein Bar', 'slightly unpleasant tasting edible bar that seems to provide all necessary nutrients'),
+'stick': Item('Stick', 'a useless looking wooden stick'),
+}
 
 # Create Room Items
-room['outside'].items = []
-room['foyer'].items = []
-room['overlook'].items = []
-room['narrow'].items = []
-room['treasure'].items = []
+room['outside'].items = [thing['stick'], thing['lighter']]
+room['foyer'].items = [thing['lantern'], thing['shovel']]
+room['overlook'].items = [thing['ruby'], thing['dress'], thing['vest']]
+room['narrow'].items = [thing['pants'], thing['dagger'], thing['shirt']]
+room['treasure'].items = [thing['food']]
 
 #
 # Main
@@ -85,7 +87,7 @@ while game_running == True:
     place = human.location.name.upper()
     print(f"{player} you are in the {place}.\n")
     print(f"{human.location.description}...\n")
-    print("Your choices are: [n] North  [s] South  [w] West [e] East  [q] Quit\n")
+    print("Your choices are: [n] North  [s] South  [w] West [e] East [q] Quit [l] Look  [i] Inventory")
     choice = input("Please make a selection to continue: ")
     print("  ")
     if choice == "n":
@@ -116,6 +118,31 @@ while game_running == True:
             print("######################################")
             print("BUMP! Please choose another direction!")
             print("######################################\n")
+    elif choice == "l":
+        if len(human.location.items) == 0:
+            print("The room is empty.\n")
+        elif len(human.location.items) > 0:
+            print('In the room you find:')
+            for i in human.location.items:
+                print(f"Name: '{i.item_name}': {i.item_description}.\n")
+            print(f"You may pick up an item (command [p]) and add it to your inventory or continue (command [c]).\n")
+            option = input("Please select an option: ")
+            if option == "c":
+                pass
+            elif option == "p":
+                added_item = thing[input("Please type the item's name: ")]
+                human.get_item(added_item)
+                for e in human.inventory:
+                    print(e.item_name)
+            else:
+                print("Please select a valid command.\n")
+    elif choice == "i":
+        if len(human.inventory) == 0:
+            print("Your inventory is empty.\n")
+    elif choice == "d":
+        pass
+    elif choice == "p":
+        pass
     elif choice == "q":
         print("GOODBYE!!!\n")
         game_running = False

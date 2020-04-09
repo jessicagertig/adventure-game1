@@ -9,7 +9,11 @@ class Player:
 
   def get_item(self, item):
     self.inventory.append(item)
+    print(item)
+    self.location.items.remove(item)
+    new_item = item.item_name.upper()
+    print(f"You have added {new_item} to your inventory!")
 
   def drop_item(self, item):
     self.inventory.remove(item)
-    Room.items.append(item)
+    self.location.items.append(item)
