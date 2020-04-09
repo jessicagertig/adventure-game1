@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -34,6 +35,26 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# Declare all the items
+ruby = Item('Ruby', 'glittering deep red jewel')
+dagger = Item('Dagger', 'razor sharp two sided dagger')
+shovel = Item('Shovel', 'long handled rusty shovel')
+dress = Item('Dress', 'fitted scarlet velvet gown trimmed with golden braid')
+vest = Item('Vest', 'leather vest with lacings to put on over any clothing')
+pants = Item('Pants', 'leather leggings which are strangely flexible')
+shirt = Item('Shirt', 'dark gold silk button up shirt which seems impervious to flames')
+lantern = Item('Lantern', 'metal lantern with a seeminly endless supply of fuel')
+lighter = Item('Lighter', 'pure gold lighter with a rose pattern etched into the gold')
+food = Item('Protein Bar', 'slightly unpleasant tasting edible bar that seems to provide all necessary nutrients')
+
+
+# Create Room Items
+room['outside'].items = []
+room['foyer'].items = []
+room['overlook'].items = []
+room['narrow'].items = []
+room['treasure'].items = []
+
 #
 # Main
 #
@@ -47,7 +68,6 @@ player = human.name.upper()
 print("#############################################")
 print(f"## Welcome to the Adventure Game {player}! ##")
 print("#############################################\n")
-##DEFINE COMMANDS
 
 game_running = True
 
