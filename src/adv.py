@@ -58,7 +58,7 @@ room['narrow'].items = [thing['pants'], thing['dagger'], thing['shirt']]
 room['treasure'].items = [thing['food']]
 
 #
-# Main
+####################### MAIN ###########################
 #
 
 # Make a new player object that is currently in the 'outside' room.
@@ -76,6 +76,7 @@ game_running = True
 ###I abstracted out two helper functions for picking up and dropping items and call them recursively to allow the user to not have to go through the whole game loop if they incorrectly type in the name of item they wish to pick up or drop
 
 ###HELPER FUNCTION/LOOP FOR ROOM INSPECTION AND ADDING TO INVENTORY
+
 ###NOTES RE LOOK AND PICKUP LOOP: items are in a library called 'thing' and when human/user goes to pickup item we are actually inputting the key into the getter function. Below you will see the .get() dictionary method used in order to check and see if the key exists in order to implement error handling.  The same error handling is in the INVENTORY AND DROP LOOP.###
 def room_items():
     ##IF LIST IS EMPTY
@@ -126,6 +127,7 @@ def inventory():
             else:
                 print("Please select a valid command.\n")
 
+##DIRECTIONS:
 # Write a loop that:
 #
 # * Prints the current room name
@@ -136,6 +138,7 @@ def inventory():
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
 while game_running == True:
     place = human.location.name.upper()
     print(f"{player} you are in the {place}.\n")
