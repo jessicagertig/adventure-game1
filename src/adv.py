@@ -73,6 +73,59 @@ print("#############################################\n")
 
 game_running = True
 
+###I abstracted out two helper functions for picking up and dropping items and call them recursively to allow the user to not have to go through the whole game loop if they incorrectly type in the name of item they wish to pick up or drop
+
+###HELPER FUNCTION/LOOP FOR ROOM INSPECTION AND ADDING TO INVENTORY
+###NOTES RE LOOK AND PICKUP LOOP: items are in a library called 'thing' and when human/user goes to pickup item we are actually inputting the key into the getter function. Below you will see the .get() dictionary method used in order to check and see if the key exists in order to implement error handling.  The same error handling is in the INVENTORY AND DROP LOOP.###
+def room_items():
+    ##IF LIST IS EMPTY
+    if len(human.location.items) == 0:
+        print("THE ROOM IS EMPTY!\n")
+    ##IF LIST CONTAINS ITEMS PRINT OUT ITEMS
+    elif len(human.location.items) > 0:
+        print('In the room you find: \n')
+        for i in human.location.items:
+            print(f"Name: '{i.item_name}': {i.item_description}.\n")
+        ##ASK USER TO EITHER PICKUP OR CONTINUE
+        print(f"You may pick up an item (command [p]) and add it to your inventory or continue (command [c]).\n")
+        option = input("Please select a command: ")
+        if option == "c":
+            pass
+        elif option == "p":
+            ##ASK USER TO TYPE IN NAME OF ITEM --> see above notes about error handling and dictionary
+            added_item = input("Please type the item's name: ")
+            added_item_key = thing.get(added_item)
+            if added_item_key:
+                human.get_item(added_item_key)
+            else:
+                print("That item is not in the room.\n")
+                room_items()
+        else:
+            print("Please select a valid command.\n")
+
+###HELPER FUNCTION/LOOP FOR INVENTORY LOOK UP AND DROPPING ITEMS
+def inventory():
+    if len(human.inventory) == 0:
+        print("YOUR INVENTORY IS EMPTY!\n")
+    elif len(human.inventory) > 0:
+        print('Your inventory contains:\n')
+        for i in human.inventory:
+            print(f"Name: '{i.item_name}': {i.item_description}.\n")
+            print(f"You may drop an item (command [d]) and leave it in the room or continue (command [c]).\n")
+            option = input("Please select a command: ")
+            if option == "c":
+                pass
+            elif option == "d":
+                dropped_item = input("Please type the item's name: ")
+                dropped_item_key = thing.get(dropped_item)
+                if dropped_item_key:
+                    human.drop_item(dropped_item_key)
+                else:
+                    print("That item is not in your inventory.\n")
+                    inventory()
+            else:
+                print("Please select a valid command.\n")
+
 # Write a loop that:
 #
 # * Prints the current room name
@@ -118,38 +171,12 @@ while game_running == True:
             print("######################################")
             print("BUMP! Please choose another direction!")
             print("######################################\n")
+###SEE ABOVE HELPER FUNCTION FOR LOOKING AT ROOM AND PICKING UP ITEMS: room_items()
     elif choice == "l":
-        if len(human.location.items) == 0:
-            print("THE ROOM IS EMPTY!\n")
-        elif len(human.location.items) > 0:
-            print('In the room you find: \n')
-            for i in human.location.items:
-                print(f"Name: '{i.item_name}': {i.item_description}.\n")
-            print(f"You may pick up an item (command [p]) and add it to your inventory or continue (command [c]).\n")
-            option = input("Please select a command: ")
-            if option == "c":
-                pass
-            elif option == "p":
-                added_item = thing[input("Please type the item's name: ")]
-                human.get_item(added_item)
-            else:
-                print("Please select a valid command.\n")
+        room_items()
+###SEE ABOVE HELPER FUNCTION FOR LOOK AT INVENTORY AND DROPPING ITEMS: inventory() 
     elif choice == "i":
-        if len(human.inventory) == 0:
-            print("YOUR INVENTORY IS EMPTY!\n")
-        elif len(human.inventory) > 0:
-            print('Your inventory contains:\n')
-            for i in human.inventory:
-                print(f"Name: '{i.item_name}': {i.item_description}.\n")
-            print(f"You may drop an item (command [d]) and leave it in the room or continue (command [c]).\n")
-            option = input("Please select a command: ")
-            if option == "c":
-                pass
-            elif option == "d":
-                dropped_item = thing[input("Please type the item's name: ")]
-                human.drop_item(dropped_item)
-            else:
-                print("Please select a valid command.\n")
+        inventory()
     elif choice == "q":
         print("GOODBYE!!!\n")
         game_running = False
